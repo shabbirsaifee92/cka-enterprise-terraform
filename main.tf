@@ -27,14 +27,14 @@ resource "aws_instance" "ubuntu22_docker" {
 }
 
 resource "aws_security_group" "sg" {
-  name        = "Allow All"
-  description = "Allow all traffic"
+  name        = "SSH only"
+  description = "SSH only acces"
 
   ingress {
     cidr_blocks = ["174.105.25.145/32"]
-    from_port   = 0
-    protocol    = "-1"
-    to_port     = 0
+    from_port   = 22
+    protocol    = "tcp"
+    to_port     = 22
   }
 
   egress {
