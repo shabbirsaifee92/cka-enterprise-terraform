@@ -23,7 +23,8 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "ubuntu22_docker" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.large"
-
+  key_name               = aws_key_pair.deployer.id
+  vpc_security_group_ids = [aws_security_group.sg.id]
 }
 
 resource "aws_security_group" "sg" {
@@ -32,9 +33,9 @@ resource "aws_security_group" "sg" {
 
   ingress {
     cidr_blocks = ["174.105.25.145/32"]
-    from_port   = 22
-    protocol    = "tcp"
-    to_port     = 22
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
   }
 
   egress {
