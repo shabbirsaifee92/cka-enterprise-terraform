@@ -1,4 +1,4 @@
 variable "ssh_pulic_key" {
-  type = "string"
+  type = string
   sensitive = true
 }
