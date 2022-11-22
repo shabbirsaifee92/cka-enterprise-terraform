@@ -35,3 +35,17 @@
   - name: Install Docker Module for Python
     pip:
       name: docker
+  - name: install kubectl
+    snap:
+      name: kubectl
+      classic: yes
+      state: present
+  - name: Install kinD
+    shell: |
+      curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+      chmod +x ./kind
+      mv ./kind /usr/local/bin/kind
+
+
+
+
