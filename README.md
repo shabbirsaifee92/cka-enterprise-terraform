@@ -15,4 +15,8 @@ Setup a remote server with Ubuntu 20 and install KinD
 4. Setup Nginx Ingress Controller
     `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind deploy.yaml namespace/ingress-nginx created`
 
+5. Setup Layer 4 load balancer (MetalLb)
+    `cluster-setup/install-metallb.sh`
+    `kubectl apply -f metallb-config.yaml`
+
 Now we should have a fully functional 2 node kubernetes cluster running calico with ingress controller.
