@@ -1,22 +1,22 @@
 # cka-enterprise-terraform
 Setup a remote server with Ubuntu 20 and install KinD
 
-## Steps to setup the complete kubernetes cluster
+## Setup the complete kubernetes cluster
 
-1. Run the ansible playbook to install docker, kind and other packages `ansible-playbok --private-key <private-key> ansible/playbook.yaml`
+Run the ansible playbook to install important packages and initialize kubernetes cluster `ansible-playbook -i ansible/hosts.ini --private-key=<private-key-path> ansible/playbook.yaml`
 
-2. Create a new kind cluster
-    `kind cluster create --config cluster-setup/kind-config.yaml`
+## The playbook will do the following for kubernetes cluster to work
 
-3. Install Calico Network Plugin
-    `kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/tigera-operator.yaml`
-    `kubectl create -f cluster-setup/calico.yaml`
+1. Install Kind
 
-4. Setup Nginx Ingress Controller
-    `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind deploy.yaml namespace/ingress-nginx created`
+2. Install helm, jq, kubetctx, and k9s (optional)
 
-5. Setup Layer 4 load balancer (MetalLb)
-    `cluster-setup/install-metallb.sh`
-    `kubectl apply -f metallb-config.yaml`
+3. Create a new kind cluster named `cluster01`
+
+4. Install Calico Network Plugin
+
+5. Setup Nginx Ingress Controller
+
+6. Setup Layer 4 load balancer (MetalLb)
 
 Now we should have a fully functional 2 node kubernetes cluster running calico with ingress controller.

@@ -1,6 +1,7 @@
 ---
 - hosts: all
   become: true
+  become_user: root
   tasks:
   - name: install aptitude
     apt:
@@ -35,17 +36,26 @@
   - name: Install Docker Module for Python
     pip:
       name: docker
-  - name: install kubectl
+  - name: install kubectl, kubectx, k9s
     snap:
-      name: kubectl
+      name:
+      - kubectl
+      - kubectx
+      - k9s
       classic: yes
       state: present
+  - name: Install Helm and Jq
+    shell: |
+      curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+      chmod 700 get_helm.sh
+      ./get_helm.sh
+      snap install jq --classic
   - name: Install kinD
     shell: |
       curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
       chmod +x ./kind
       mv ./kind /usr/local/bin/kind
-
-
-
-
+  - name: Copy Cluster Configuration
+    copy: src=../cluster-setup/ dest=/home/cluster-setup mode=0777
+  - name: Initialize KinD cluster
+    command: /home/cluster-setup/initialize_cluster.sh
