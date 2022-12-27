@@ -20,7 +20,7 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "ubuntu22_docker" {
+resource "aws_instance" "ubuntu20_docker" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.large"
   key_name               = aws_key_pair.deployer.id
